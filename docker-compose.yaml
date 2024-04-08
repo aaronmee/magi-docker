@@ -1,0 +1,11 @@
+---
+services:
+  magi:
+    image: aaronme/magi-docker:v1.4.7.2
+    container_name: magi-docker
+    ports:
+      - "8232:8232"
+      - "8233:8233"
+    volumes:
+      - ./data:/magi/data
+    # restart: unless-stopped

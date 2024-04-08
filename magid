@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec magi-docker ./magid -conf=/magi/data/magi.conf -datadir=/magi/data "$@"
