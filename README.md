@@ -21,17 +21,13 @@ This image provides various versions that are available via tags:
 
 
 
-## Usage (Linux)
-### The easy way
-1. Download the repository
+## Setup (Linux)
+1. Download the and enter the repository
   ```bash
   git clone https://github.com/aaronmee/magi-docker.git
-  ```
-2. Enter the repository
-  ```bash
   cd magi-docker
   ```
-3. Download newest blockchain (optional, but recommended)
+2. Download newest blockchain (optional, but recommended)
   * Go to https://chain.magicoin.de
   * Copy the link to the newest file
   ```bash
@@ -45,12 +41,25 @@ This image provides various versions that are available via tags:
   ```bash
   mv -r <blockchain> data/blockchain
   ```
-4. Start the container using the image. You can either use docker compose or the [docker cli](https://github.com/aaronmee/magi-docker/blob/main/README.md#docker-cli)
+3. Update the `data/magi.conf` file and copy your `wallet.dat` file into the `data` folder, if needed
+4. Start the container using the image. You can either use docker compose or the [docker cli](https://github.com/aaronmee/magi-docker/blob/main/README.md#docker-cli). 
   ```bash
   docker compose up -d
   ```
+  > Note: The content of docker-compose.yaml is listed below
 
-### docker compose (recommended, [click here to install](https://docs.docker.com/compose/install/))
+## Windows
+### Docker Desktop ([click here to install](https://docs.docker.com/desktop/install/windows-install/))
+1. Create a folder to store your files
+2. Create a `data` subfolder and a `magi.conf`file inside
+3. Paste the content from https://github.com/aaronmee/magi-docker/blob/main/magi.conf to your magi.conf file and adjust the settings, if needed
+4. Open `Docker Desktop`
+5. Search for `magi-docker`using the search bar
+   > Note: Make sure to select the image by `aaronme`, the other one serves a different purpose.
+6. Hit `Run`
+
+
+### docker-compose (recommended, [click here to install](https://docs.docker.com/compose/install/))
 ```yaml
 ---
 services:
