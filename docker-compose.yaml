@@ -1,7 +1,7 @@
 ---
 services:
   magi:
-    image: aaronme/magi-docker:v1.4.7.2
+    image: aaronme/magi-docker:latest
     container_name: magi-docker
     ports:
       - "8232:8232"
