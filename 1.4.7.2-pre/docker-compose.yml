@@ -1,6 +1,6 @@
 ---
 services:
-  magi:
+  magi-docker:
     image: aaronme/magi-docker:latest
     container_name: magi-docker
     ports:
@@ -8,4 +8,4 @@ services:
       - "8233:8233"
     volumes:
       - ./data:/magi/data
-    # restart: unless-stopped
+    restart: unless-stopped
