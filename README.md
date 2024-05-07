@@ -1,6 +1,7 @@
 # magi-docker
-This repository contains the instructions to setup a conterized version of the Magi (XMG) daemon. 
-A docker image is provided on docker hub. So far, only x86_64 and arm64 architectures are supported. 
+This repository contains instructions to setup a conterized version of the Magi (XMG) daemon. 
+A docker image is provided on docker hub, which is built from source. 
+
 
 ## Supported architectures
 The docker image is built for multiple architectures at the same time.
@@ -17,54 +18,20 @@ This image provides various versions that are available via tags:
 | Tag | Available | Description |
 | :----: | :----: |--- |
 | latest | ✅ | Latest stable release |
-| vx.x.x.x | ✅ | Specific release (check [available releases](https://github.com/aaronmee/magi-docker/blob/main/README.md#available-releases)) |
+| vx.x.x.x | ✅ | Specific release ([available releases](https://github.com/aaronmee/magi-docker/blob/main/README.md#available-releases)) |
 
 
+## Setup
+To get started creating a container from this image you can either use docker-compose or the docker cli.
 
-## Setup (Linux)
-1. Download the and enter the repository
-  ```bash
-  git clone https://github.com/aaronmee/magi-docker.git
-  cd magi-docker
-  ```
-2. Download newest blockchain (optional, but recommended)
-  * Go to https://chain.magicoin.de
-  * Copy the link to the newest file
-  ```bash
-  megadl <link_to_blockchain.zip>
-  ```
-  * Unzip the folder
-  ```bash
-  unzip <blockchain.zip>
-  ```
-  * Move the blockchain to the `data` folder
-  ```bash
-  mv -r <blockchain> data/blockchain
-  ```
-3. Update the `data/magi.conf` file and copy your `wallet.dat` file into the `data` folder, if needed
-4. Start the container using the image. You can either use docker compose or the [docker cli](https://github.com/aaronmee/magi-docker/blob/main/README.md#docker-cli). 
-  ```bash
-  docker compose up -d
-  ```
-  > Note: The content of docker-compose.yaml is listed below
+Make sure the `data` directory exists and contains a `magi.conf` file, containing at least an rpcuser and an rpcpassword. 
 
-## Windows
-### Docker Desktop ([click here to install](https://docs.docker.com/desktop/install/windows-install/))
-1. Create a folder to store your files
-2. Create a `data` subfolder and a `magi.conf`file inside
-3. Paste the content from https://github.com/aaronmee/magi-docker/blob/main/magi.conf to your magi.conf file and adjust the settings, if needed
-4. Open `Docker Desktop`
-5. Search for `magi-docker`using the search bar
-   > Note: Make sure to select the image by `aaronme`, the other one serves a different purpose.
-6. Hit `Run`
-
-
-### docker-compose (recommended, [click here to install](https://docs.docker.com/compose/install/))
+### docker-compose (recommended, [install](https://docs.docker.com/compose/install/))
 ```yaml
 ---
 services:
-  magi:
-    image: aaronme/magi-docker:v1.4.7.2
+  magi-docker:
+    image: aaronme/magi-docker:latest
     container_name: magi-docker
     ports:
       - "8232:8232"
@@ -73,7 +40,12 @@ services:
       - ./data:/magi/data
     restart: unless-stopped
 ```
-### docker cli ([click here to install](https://docs.docker.com/engine/install/))
+Start the container with
+```bash
+docker compose up -d
+```
+
+### docker cli ([install](https://docs.docker.com/engine/install/))
 ```bash
 docker run -d \
   --name magi-docker \
@@ -81,9 +53,42 @@ docker run -d \
   -p 8233:8233 \
   -v ./data:/magi/data \
   --restart unless-stopped \
-  aaronme/magi-docker:v1.4.7.2
+  aaronme/magi-docker:latest
 ```
+
+## Post Setup (optional)
+
+Always stop the container when editing files in the data directory.
+
+### Blockchain
+Download the newest blockchain (speeds up initial syncing)
+* Go to https://chain.magicoin.de
+* Copy the link for the newest file
+* Install MEGA command line tools
+```bash
+sudo apt install megatools
+```
+* Download the blockchain
+```bash
+megadl <link_to_blockchain.zip>
+```
+* Unzip the folder
+```bash
+unzip <blockchain.zip>
+```
+* Move the blockchain to the magi `data` folder
+```bash
+mv <blockchain> data/blockchain
+```
+
+### Magi configuration
+The magi configuration file is located at `data/magi.conf`
 
 ## Available releases
 Supported at the moment is:
 * v1.4.7.2 (latest)
+
+## Support
+This repository is managed and maintained by aaronmee.
+
+If you  run into problems or need help, you can reach out to @aaronmee on our [community discord](https://discord.gg/JYJpXeXAH3).
